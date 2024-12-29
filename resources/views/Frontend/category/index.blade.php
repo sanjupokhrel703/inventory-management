@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Frontend.layouts.app')
 @section('content')
     <div class="container">
         <div class="mb-3 d-flex justify-content-between">

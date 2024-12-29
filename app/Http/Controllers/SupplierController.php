@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,18 +14,15 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        // Fetch all suppliers
         $suppliers = Supplier::all();
         $totalCows = Supplier::sum('cows');
         $totalBuffaloes = Supplier::sum('buffaloes');
         $totalSupplier = Supplier::count();
         // Fetch all suppliers
         $supplier = Supplier::with('purchases')->get();
-        // $suppliers = Supplier::with('user')->get();
-        // $users = User::pluck('name', 'id');
 
         // Pass the data to the index view
-        return view('supplier.index', compact('suppliers', 'totalCows', 'supplier', 'totalBuffaloes', 'totalSupplier'));
+        return view('Frontend.supplier.index', compact('suppliers', 'totalCows', 'supplier', 'totalBuffaloes', 'totalSupplier'));
     }
 
     /**
@@ -33,37 +31,18 @@ class SupplierController extends Controller
     public function create()
     {
         // Return the create view
-        return view('supplier.create');
+        return view('Frontend.supplier.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     // Validate the incoming data
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'primary_number' => 'required|string|max:15|unique:suppliers',
-    //         'secondary_number' => 'required|string|max:15|unique:suppliers',
-    //         'address' => 'required|string|max:255',
-    //         'cows' => 'nullable|integer|min:0',
-    //         'buffaloes' => 'nullable|integer|min:0',
-    //     ]);
-
-    //     // Store the supplier in the database
-    //     Supplier::create($validatedData);
-
-    //     // Redirect to index page with success message
-    //     return redirect()->route('suppliers.index')->with('success', 'Supplier added successfully.');
-    // }
 
     public function store(Request $request)
     {
         // Validate the incoming data
         $validatedData = $request->validate([
             'name' => 'required|string|max:30',
-            // 'primary_number' => 'required|string|max:15|unique:suppliers,primary_number',
             'primary_number' => [
                 'required',
                 'string',
@@ -98,31 +77,12 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        // Return the edit view with the specific supplier
-        return view('supplier.edit', compact('supplier'));
+        return view('Frontend.supplier.edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, Supplier $supplier)
-    // {
-    //     // Validate the incoming data
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'primary_number' => 'required|string|max:15|unique:suppliers,primary_number,' . $supplier->id,
-    //         'secondary_number' => 'required|string|max:15|unique:suppliers,secondary_number,' . $supplier->id,
-    //         'address' => 'required|string|max:255',
-    //         'cows' => 'nullable|integer|min:0',
-    //         'buffaloes' => 'nullable|integer|min:0',
-    //     ]);
-
-    //     // Update the supplier
-    //     $supplier->update($validatedData);
-
-    //     // Redirect to index page with success message
-    //     return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
-    // }
 
     public function update(Request $request, Supplier $supplier)
     {
@@ -172,15 +132,24 @@ class SupplierController extends Controller
             ->with(['product', 'user'])
             ->orderBy('created_at', 'desc')
             ->get();
-        // $users = User::all();
         // Calculate the total quantity
         $totalQuantity = $purchases->sum('quantity');
-        // $totalSupplier = Supplier::count();
-        // $products = Product::all();
         $totalAmount = $purchases->sum(function ($purchase) {
             return $purchase->quantity * $purchase->product->price;
         });
 
-        return view('supplier.purchases', compact('supplier', 'totalAmount', 'totalQuantity', 'purchases'));
+        return view('Frontend.supplier.purchases', compact('supplier', 'totalAmount', 'totalQuantity', 'purchases'));
+    }
+
+    public function product($supplierId, $productId)
+    {
+        $supplier = Supplier::findOrFail($supplierId);
+
+        // Fetch the purchases for the specific product
+        $purchases = Purchase::where('supplier_id', $supplierId)
+            ->where('product_id', $productId)
+            ->with(['product', 'user']) // Eager load related models
+            ->get();
+
     }
 }

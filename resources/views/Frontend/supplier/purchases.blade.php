@@ -1,5 +1,5 @@
 {{-- resources/views/suppliers/purchases.blade.php  --}}
-@extends('layouts.app')
+@extends('Frontend.layouts.app')
 
 @section('content')
     <div class="container">
@@ -38,20 +38,29 @@
 
                         <td>{{ $supplier->name }}</td>
 
-                        <td>{{ $purchase->product->name }}</td>
+                        {{-- <td>{{ $purchase->product->name }}</td> --}}
+
+                        {{-- <td>
+                            <a href="{{ route('suppliers.product', $purchase->product->id) }}">
+                                {{ $purchase->product->name }}
+                            </a>
+                        </td> --}}
+                        <td>
+                            <a
+                                href="{{ route('suppliers.product', ['supplier' => $purchase->supplier_id, 'product' => $purchase->product_id]) }}">
+                                {{ $purchase->product->name }}
+                            </a>
+                        </td>
+
+
+                        </td>
                         <td>{{ $purchase->quantity }}</td>
                         <td>{{ $purchase->product->price }}</td>
                         <td>{{ $purchase->quantity * $purchase->product->price }}</td>
                     </tr>
                 @endforeach
             </tbody>
-            {{-- <tfoot class="font-weight-bold">
-                <tr>
-                    <th colspan="4" class="text-right"> <span>Total LTR :</span> </th>
-                    <th>{{ $totalQuantity }}</th>
-                    <th>{{ $totalAmount }}</th>
-                </tr>
-            </tfoot> --}}
+
             <tfoot class="font-weight-bold">
                 <tr>
                     <th colspan="6" class="text-right">Total Quantity:</th>
