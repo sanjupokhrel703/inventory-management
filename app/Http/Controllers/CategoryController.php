@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Category::all();
-        return view('category.index', compact('category'));
+        return view('Frontend.category.index', compact('category'));
 
     }
 
@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('Frontend.category.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('category.edit', compact('category'));
+        return view('Frontend.category.edit', compact('category'));
     }
 
     /**

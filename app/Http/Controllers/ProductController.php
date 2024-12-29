@@ -18,7 +18,7 @@ class ProductController extends Controller
 
         $products = Product::select('*', DB::raw('quantity * price AS total_price'))->paginate(50);
 
-        return view('products.index', compact('products'));
+        return view('Frontend.products.index', compact('products'));
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+        return view('Frontend.category.create', compact('categories'));
 
     }
 
@@ -80,7 +80,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+        return view('Frontend.products.edit', compact('product', 'categories'));
     }
 
     /**
