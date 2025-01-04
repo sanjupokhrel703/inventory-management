@@ -37,13 +37,12 @@
                         <td>
                             <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('product.destroy', $product->id) }}" method="POST"
-                                style="display:inline-block;>
+                                style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit"
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure want to delete this ?') ">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure want to delete this ?') ">Delete</button>
                             </form>
                         </td>
                     </tr>

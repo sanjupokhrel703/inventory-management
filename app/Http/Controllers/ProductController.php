@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('Frontend.category.create', compact('categories'));
+        return view('Frontend.products.create', compact('categories'));
 
     }
 

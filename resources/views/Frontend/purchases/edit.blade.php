@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Frontend.layouts.app')
 
 @section('content')
     <h1>Edit Purchase</h1>

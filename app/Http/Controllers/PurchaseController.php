@@ -16,7 +16,7 @@ class PurchaseController extends Controller
     public function index()
     {
         $purchases = Purchase::with(['supplier', 'product'])->get();
-        return view('purchases.index', compact('purchases'));
+        return view('Frontend.purchases.index', compact('purchases'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PurchaseController extends Controller
     {
         $suppliers = supplier::all();
         $products = Product::all();
-        return view('purchases.create', compact('suppliers', 'products'));
+        return view('Frontend.purchases.create', compact('suppliers', 'products'));
     }
 
     /**
@@ -62,7 +62,7 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrFail($id);
         $suppliers = Supplier::all();
         $products = Product::all();
-        return view('purchases.edit', compact('purchase', 'suppliers', 'products'));
+        return view('Frontend.purchases.edit', compact('purchase', 'suppliers', 'products'));
     }
 
     /**

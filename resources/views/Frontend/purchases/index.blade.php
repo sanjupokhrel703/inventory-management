@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('Frontend.layouts.app')
 
 @section('content')
     <div class="container">
@@ -36,7 +36,7 @@
                         <td>{{ $purchase->quantity }}</td>
                         <td>
                             <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-warning btn-sm ">Edit</a>
-                            <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST"
+                            <form action="{{ route('purchases.destroy', $purchase->product->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
