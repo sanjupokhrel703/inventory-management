@@ -1,0 +1,54 @@
+name: 🚀 Deploy website on push
+on:
+  push:
+    branches:
+      - master
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+
+    # - name: Diagnose Composer
+    #   run: composer diagnose
+
+    - name: Set up PHP 8.2
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Install Dependencies
+      run: composer install --ignore-platform-reqs
+
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Generate App Key
+      run: php artisan key:generate
+
+
+    - name: Config Clearing
+      run: php artisan config:clear
+
+    # - name: OPtimizing
+    #   run: php artisan optimize:clear
+
+    - name: npm install
+      run: npm i
+
+    - name: Buil vite
+      run: npm run build
+
+    # - name: Database migrating
+    #   run: php artisan migrate
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+
+      with:
+        server: ftp.smsdairy.com
+        username: sanjupokhrel@smsdairy.com
+        password: Password@123@#
