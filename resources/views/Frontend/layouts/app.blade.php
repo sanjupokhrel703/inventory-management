@@ -18,6 +18,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+
+{{-- test --}}
 <body>
     <div id="app">
         <nav class="bg-white shadow-sm navbar navbar-expand-md navbar-light">
