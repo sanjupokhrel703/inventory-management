@@ -27,7 +27,7 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Generate App Key
-        run: php artisan key:base64:DLsN57L+P0ri1RHMqJhUiFSyBwYa0eAlxXymZRCCpn0=
+        run: php artisan key:generate
 
       - name: Config Clearing
         run: php artisan config:clear
